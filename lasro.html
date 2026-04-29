@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Explorer - Jelajahi Keindahan Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tropical-green: #2D5016;
+            --tropical-light: #8FBC5C;
+            --sand-beige: #F4E8D0;
+            --ocean-blue: #0A7EA3;
+            --sunset-orange: #FF6B35;
+            --coral-pink: #FF9580;
+            --deep-brown: #3E2723;
+            --light-cream: #FFF8E7;
+            --gold: #FFB800;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--light-cream) 0%, var(--sand-beige) 100%);
+            color: var(--deep-brown);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0A7EA3 0%, #2D5016 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        .login-box {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 450px;
+            max-width: 90%;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--tropical-green);
+            margin-bottom: 5px;
+        }
+
+        .login-logo p {
+            color: var(--ocean-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: var(--sand-beige);
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: var(--deep-brown);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .login-tab.active {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--deep-brown);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--sand-beige);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--ocean-blue);
+            box-shadow: 0 0 0 3px rgba(10, 126, 163, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--tropical-green) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(10, 126, 163, 0.3);
+        }
+
+        .login-hint {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--light-cream);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--deep-brown);
+        }
+
+        .login-hint strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--tropical-green);
+        }
+
+        /* Main App Styles */
+        .app-container {
+            display: none;
+        }
+
+        .app-container.active {
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--tropical-green) 0%, var(--tropical-light) 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+        }
+
+        .logout-btn {
+            padding: 10px 25px;
+            background: var(--sunset-orange);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5722;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(45,80,22,0.9), rgba(10,126,163,0.9)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path fill="%238FBC5C" opacity="0.1" d="M0,100 Q300,200 600,100 T1200,100 L1200,400 L0,400 Z"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 80px 30px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: fadeInDown 0.8s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 30px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--tropical-green);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Destination Cards */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .destination-card:hover .destination-image {
+            transform: scale(1.1);
+        }
+
+        .destination-content {
+            padding: 25px;
+        }
+
+        .destination-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .destination-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--tropical-green);
+            font-weight: 700;
+        }
+
+        .destination-rating {
+            background: var(--gold);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .destination-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .destination-price {
+            font-size: 1.5rem;
+            color: var(--sunset-orange);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .destination-price small {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .like-btn {
+            background: var(--light-cream);
+            color: var(--tropical-green);
+            border: 2px solid var(--tropical-light);
+        }
+
+        .like-btn.active {
+            background: var(--tropical-green);
+            color: white;
+        }
+
+        .dislike-btn {
+            background: var(--light-cream);
+            color: #666;
+            border: 2px solid #ddd;
+        }
+
+        .dislike-btn.active {
+            background: #666;
+            color: white;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--coral-pink));
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,107,53,0.3);
+        }
+
+        .comment-btn {
+            background: var(--ocean-blue);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .comment-btn:hover {
+            background: #096883;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--sand-beige);
+            display: none;
+        }
+
+        .comments-section.active {
+            display: block;
+        }
+
+        .comment-form {
+            margin-bottom: 20px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--sand-beige);
+            border-radius: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--ocean-blue);
+        }
+
+        .submit-comment-btn {
+            background: var(--tropical-green);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .submit-comment-btn:hover {
+            background: var(--tropical-light);
+        }
+
+        .comments-list {
+            margin-top: 20px;
+        }
+
+        .comment-item {
+            background: var(--light-cream);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: var(--tropical-green);
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-comment-btn, .delete-comment-btn {
+            background: none;
+            border: none;
+            color: var(--ocean-blue);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .delete-comment-btn {
+            color: var(--sunset-orange);
+        }
+
+        .comment-text {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: scaleIn 0.3s;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--tropical-green);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--sunset-orange);
+        }
+
+        .booking-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .booking-form input,
+        .booking-form select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--sand-beige);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .booking-form input:focus,
+        .booking-form select:focus {
+            outline: none;
+            border-color: var(--ocean-blue);
+        }
+
+        .submit-booking-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--coral-pink));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-booking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,107,53,0.3);
+        }
+
+        .confirmation-message {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .confirmation-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-message h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--tropical-green);
+            margin-bottom: 15px;
+        }
+
+        .confirmation-details {
+            background: var(--light-cream);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .confirmation-details p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .confirmation-details strong {
+            color: var(--deep-brown);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid var(--sand-beige);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .admin-tab.active {
+            background: var(--tropical-green);
+            color: white;
+            border-color: var(--tropical-green);
+        }
+
+        .admin-section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .add-destination-btn {
+            background: var(--tropical-green);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+
+        .add-destination-btn:hover {
+            background: var(--tropical-light);
+        }
+
+        .admin-destinations-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .admin-destination-item {
+            background: var(--light-cream);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-destination-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--tropical-green);
+            margin-bottom: 8px;
+        }
+
+        .admin-destination-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-dest-btn, .delete-dest-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .edit-dest-btn {
+            background: var(--ocean-blue);
+            color: white;
+        }
+
+        .delete-dest-btn {
+            background: var(--sunset-orange);
+            color: white;
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bookings-table th,
+        .bookings-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--sand-beige);
+        }
+
+        .bookings-table th {
+            background: var(--tropical-green);
+            color: white;
+            font-weight: 700;
+        }
+
+        .bookings-table tr:hover {
+            background: var(--light-cream);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--tropical-green));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+
+            .admin-destination-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>🌴 Nusantara Explorer</h1>
+                <p>Jelajahi Keindahan Indonesia</p>
+            </div>
+
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchLoginTab('user')">Login Pengguna</button>
+                <button class="login-tab" onclick="switchLoginTab('admin')">Login Admin</button>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required placeholder="Masukkan username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Masukkan password">
+                </div>
+                <button type="submit" class="login-btn">Masuk</button>
+            </form>
+
+            <div class="login-hint">
+                <strong>💡 Hint Login:</strong>
+                <div id="loginHintContent">
+                    Pengguna: username = <strong>user</strong>, password = <strong>user123</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">🌴 Nusantara Explorer</div>
+                <div class="user-info">
+                    <span class="user-name" id="loggedInUser"></span>
+                    <button class="logout-btn" onclick="logout()">Keluar</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- User Dashboard -->
+        <div id="userDashboard">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Jelajahi Pesona Indonesia</h1>
+                <p>Temukan destinasi wisata menakjubkan di seluruh Nusantara</p>
+            </section>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <h2 class="section-title">Destinasi Populer</h2>
+                <div class="destinations-grid" id="destinationsGrid"></div>
+            </main>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminPanel">
+            <section class="hero">
+                <h1>Admin Dashboard</h1>
+                <p>Kelola destinasi dan pemesanan wisata</p>
+            </section>
+
+            <main class="main-content">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('destinations')">Kelola Destinasi</button>
+                    <button class="admin-tab" onclick="switchAdminTab('bookings')">Data Pemesanan</button>
+                    <button class="admin-tab" onclick="switchAdminTab('stats')">Statistik</button>
+                    <button class="admin-tab" onclick="switchAdminTab('comments')">Kelola Komentar</button>
+                </div>
+
+                <!-- Destinations Management -->
+                <div class="admin-section active" id="adminDestinations">
+                    <button class="add-destination-btn" onclick="showAddDestinationModal()">+ Tambah Destinasi Baru</button>
+                    <div class="admin-destinations-list" id="adminDestinationsList"></div>
+                </div>
+
+                <!-- Bookings Management -->
+                <div class="admin-section" id="adminBookings">
+                    <h3 class="section-title" style="text-align: left; margin-bottom: 20px;">Daftar Pemesanan</h3>
+                    <table class="bookings-table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Pemesan</th>
+                                <th>Destinasi</th>
+                                <th>Jumlah Tiket</th>
+                                <th>Tanggal</th>
+                                <th>Total Harga</th>
+                                <th>Pembayaran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- Statistics -->
+                <div class="admin-section" id="adminStats">
+                    <h3 class="section-title" style="text-align: left; margin-bottom: 20px;">Statistik Website</h3>
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+
+                <!-- Comments Management -->
+                <div class="admin-section" id="adminComments">
+                    <h3 class="section-title" style="text-align: left; margin-bottom: 20px;">Kelola Semua Komentar</h3>
+                    <div id="allCommentsList"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Pesan Tiket Travel</h2>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div id="bookingFormContainer">
+                <form class="booking-form" id="bookingForm" onsubmit="submitBooking(event)">
+                    <div class="form-group">
+                        <label>Destinasi</label>
+                        <input type="text" id="bookingDestination" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" id="bookingName" required placeholder="Masukkan nama lengkap">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="bookingEmail" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Telepon</label>
+                        <input type="tel" id="bookingPhone" required placeholder="08xxxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Tiket</label>
+                        <input type="number" id="bookingTickets" min="1" max="10" value="1" required onchange="updateTotalPrice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Keberangkatan</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Metode Pembayaran</label>
+                        <select id="bookingPayment" required>
+                            <option value="">Pilih metode pembayaran</option>
+                            <option value="Transfer Bank">Transfer Bank</option>
+                            <option value="E-Wallet">E-Wallet (GoPay, OVO, Dana)</option>
+                            <option value="Kartu Kredit">Kartu Kredit</option>
+                            <option value="Virtual Account">Virtual Account</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Harga</label>
+                        <input type="text" id="bookingTotal" readonly style="font-size: 1.5rem; font-weight: 700; color: var(--sunset-orange);">
+                    </div>
+                    <button type="submit" class="submit-booking-btn">Konfirmasi Pemesanan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Destination Modal -->
+    <div class="modal" id="destinationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="destinationModalTitle">Tambah Destinasi Baru</h2>
+                <button class="close-modal" onclick="closeDestinationModal()">&times;</button>
+            </div>
+            <form class="booking-form" id="destinationForm" onsubmit="submitDestination(event)">
+                <div class="form-group">
+                    <label>Nama Destinasi</label>
+                    <input type="text" id="destName" required placeholder="Contoh: Bali">
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="destDescription" required placeholder="Deskripsi singkat destinasi" style="min-height: 100px;" class="comment-input"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Harga (Rp)</label>
+                    <input type="number" id="destPrice" required placeholder="5000000">
+                </div>
+                <div class="form-group">
+                    <label>Rating (1-5)</label>
+                    <input type="number" id="destRating" min="1" max="5" step="0.1" required placeholder="4.8">
+                </div>
+                <div class="form-group">
+                    <label>URL Gambar</label>
+                    <input type="url" id="destImage" required placeholder="https://example.com/image.jpg">
+                </div>
+                <button type="submit" class="submit-booking-btn">Simpan Destinasi</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage using localStorage
+        const storage = {
+            get: (key) => {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            },
+            set: (key, value) => {
+                localStorage.setItem(key, JSON.stringify(value));
+            }
+        };
+
+        // Initialize data
+        let destinations = storage.get('destinations') || [
+            {
+                id: 1,
+                name: 'Bali',
+                description: 'Pulau dewata dengan pantai eksotis, budaya yang kaya, dan pemandangan sawah terasering yang memukau.',
+                price: 5000000,
+                rating: 4.9,
+                image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=600&fit=crop',
+                likes: 245,
+                dislikes: 12,
+                comments: []
+            },
+            {
+                id: 2,
+                name: 'Raja Ampat',
+                description: 'Surga bawah laut dengan keanekaragaman hayati laut terkaya di dunia. Pulau-pulau karang yang menakjubkan.',
+                price: 12000000,
+                rating: 5.0,
+                image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop',
+                likes: 198,
+                dislikes: 5,
+                comments: []
+            },
+            {
+                id: 3,
+                name: 'Yogyakarta',
+                description: 'Kota budaya dengan Candi Borobudur dan Prambanan, istana keraton, dan kuliner khas yang lezat.',
+                price: 3500000,
+                rating: 4.7,
+                image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&h=600&fit=crop',
+                likes: 312,
+                dislikes: 18,
+                comments: []
+            },
+            {
+                id: 4,
+                name: 'Labuan Bajo',
+                description: 'Gerbang menuju Pulau Komodo dengan pantai pink, diving spots terbaik, dan sunset yang romantis.',
+                price: 8000000,
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
+                likes: 167,
+                dislikes: 8,
+                comments: []
+            },
+            {
+                id: 5,
+                name: 'Danau Toba',
+                description: 'Danau vulkanik terbesar di Asia Tenggara dengan Pulau Samosir di tengahnya. Budaya Batak yang unik.',
+                price: 4500000,
+                rating: 4.6,
+                image: 'https://images.unsplash.com/photo-1598971639441-e1e8ec0c9a5e?w=800&h=600&fit=crop',
+                likes: 223,
+                dislikes: 15,
+                comments: []
+            },
+            {
+                id: 6,
+                name: 'Gunung Bromo',
+                description: 'Gunung berapi aktif dengan lautan pasir dan sunrise paling spektakuler di Indonesia.',
+                price: 3000000,
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&h=600&fit=crop',
+                likes: 289,
+                dislikes: 11,
+                comments: []
+            }
+        ];
+
+        let bookings = storage.get('bookings') || [];
+        let currentUser = null;
+        let isAdmin = false;
+        let currentLoginTab = 'user';
+        let currentDestinationId = null;
+        let editingDestinationId = null;
+
+        // User likes and dislikes
+        let userLikes = storage.get('userLikes') || {};
+
+        // Save data to localStorage
+        function saveData() {
+            storage.set('destinations', destinations);
+            storage.set('bookings', bookings);
+            storage.set('userLikes', userLikes);
+        }
+
+        // Login Tab Switch
+        function switchLoginTab(tab) {
+            currentLoginTab = tab;
+            const tabs = document.querySelectorAll('.login-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const hintContent = document.getElementById('loginHintContent');
+            if (tab === 'admin') {
+                hintContent.innerHTML = 'Admin: username = <strong>admin</strong>, password = <strong>admin123</strong>';
+            } else {
+                hintContent.innerHTML = 'Pengguna: username = <strong>user</strong>, password = <strong>user123</strong>';
+            }
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (currentLoginTab === 'admin') {
+                if (username === 'admin' && password === 'admin123') {
+                    currentUser = 'Admin';
+                    isAdmin = true;
+                    showApp();
+                } else {
+                    alert('Username atau password admin salah!');
+                }
+            } else {
+                if (username === 'user' && password === 'user123') {
+                    currentUser = username;
+                    isAdmin = false;
+                    showApp();
+                } else {
+                    alert('Username atau password salah!');
+                }
+            }
+        }
+
+        // Show App
+        function showApp() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appContainer').classList.add('active');
+            document.getElementById('loggedInUser').textContent = currentUser;
+
+            if (isAdmin) {
+                document.getElementById('userDashboard').style.display = 'none';
+                document.getElementById('adminPanel').classList.add('active');
+                renderAdminDestinations();
+                renderBookingsTable();
+                renderStats();
+                renderAllComments();
+            } else {
+                document.getElementById('userDashboard').style.display = 'block';
+                document.getElementById('adminPanel').classList.remove('active');
+                renderDestinations();
+            }
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('appContainer').classList.remove('active');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Render Destinations
+        function renderDestinations() {
+            const grid = document.getElementById('destinationsGrid');
+            grid.innerHTML = '';
+
+            destinations.forEach(dest => {
+                const userLike = userLikes[`${currentUser}_${dest.id}`];
+                
+                const card = document.createElement('div');
+                card.className = 'destination-card';
+                card.innerHTML = `
+                    <img src="${dest.image}" alt="${dest.name}" class="destination-image">
+                    <div class="destination-content">
+                        <div class="destination-header">
+                            <h3 class="destination-name">${dest.name}</h3>
+                            <span class="destination-rating">⭐ ${dest.rating}</span>
+                        </div>
+                        <p class="destination-description">${dest.description}</p>
+                        <div class="destination-price">
+                            Rp ${dest.price.toLocaleString('id-ID')}
+                            <small>/ orang</small>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn like-btn ${userLike === 'like' ? 'active' : ''}" onclick="toggleLike(${dest.id}, 'like')">
+                                👍 ${dest.likes}
+                            </button>
+                            <button class="action-btn dislike-btn ${userLike === 'dislike' ? 'active' : ''}" onclick="toggleLike(${dest.id}, 'dislike')">
+                                👎 ${dest.dislikes}
+                            </button>
+                        </div>
+                        <button class="book-btn" onclick="openBookingModal(${dest.id})">
+                            🎫 Pesan Sekarang
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments(${dest.id})">
+                            💬 Komentar (${dest.comments.length})
+                        </button>
+                        <div class="comments-section" id="comments-${dest.id}">
+                            <div class="comment-form">
+                                <textarea class="comment-input" id="comment-input-${dest.id}" placeholder="Tulis komentar atau saran Anda..."></textarea>
+                                <button class="submit-comment-btn" onclick="submitComment(${dest.id})">Kirim Komentar</button>
+                            </div>
+                            <div class="comments-list" id="comments-list-${dest.id}"></div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                
+                renderComments(dest.id);
+            });
+        }
+
+        // Toggle Like/Dislike
+        function toggleLike(destId, type) {
+            const dest = destinations.find(d => d.id === destId);
+            const userKey = `${currentUser}_${destId}`;
+            const currentLike = userLikes[userKey];
+
+            if (currentLike === type) {
+                // Remove like/dislike
+                if (type === 'like') dest.likes--;
+                else dest.dislikes--;
+                delete userLikes[userKey];
+            } else {
+                // Change or add like/dislike
+                if (currentLike === 'like') dest.likes--;
+                if (currentLike === 'dislike') dest.dislikes--;
+                
+                if (type === 'like') dest.likes++;
+                else dest.dislikes++;
+                
+                userLikes[userKey] = type;
+            }
+
+            saveData();
+            renderDestinations();
+        }
+
+        // Toggle Comments Section
+        function toggleComments(destId) {
+            const section = document.getElementById(`comments-${destId}`);
+            section.classList.toggle('active');
+        }
+
+        // Submit Comment
+        function submitComment(destId) {
+            const input = document.getElementById(`comment-input-${destId}`);
+            const text = input.value.trim();
+            
+            if (!text) {
+                alert('Komentar tidak boleh kosong!');
+                return;
+            }
+
+            const dest = destinations.find(d => d.id === destId);
+            const comment = {
+                id: Date.now(),
+                author: currentUser,
+                text: text,
+                date: new Date().toLocaleString('id-ID')
+            };
+
+            dest.comments.push(comment);
+            input.value = '';
+            saveData();
+            renderComments(destId);
+            renderDestinations();
+        }
+
+        // Render Comments
+        function renderComments(destId) {
+            const dest = destinations.find(d => d.id === destId);
+            const list = document.getElementById(`comments-list-${destId}`);
+            
+            if (!dest || !list) return;
+
+            list.innerHTML = '';
+            dest.comments.forEach(comment => {
+                const item = document.createElement('div');
+                item.className = 'comment-item';
+                item.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.author}</span>
+                        <div class="comment-actions">
+                            ${comment.author === currentUser || isAdmin ? `
+                                <button class="edit-comment-btn" onclick="editComment(${destId}, ${comment.id})">Edit</button>
+                                <button class="delete-comment-btn" onclick="deleteComment(${destId}, ${comment.id})">Hapus</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <p class="comment-text">${comment.text}</p>
+                    <small style="color: #999;">${comment.date}</small>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Edit Comment
+        function editComment(destId, commentId) {
+            const dest = destinations.find(d => d.id === destId);
+            const comment = dest.comments.find(c => c.id === commentId);
+            
+            const newText = prompt('Edit komentar:', comment.text);
+            if (newText && newText.trim()) {
+                comment.text = newText.trim();
+                saveData();
+                renderComments(destId);
+            }
+        }
+
+        // Delete Comment
+        function deleteComment(destId, commentId) {
+            if (!confirm('Hapus komentar ini?')) return;
+            
+            const dest = destinations.find(d => d.id === destId);
+            dest.comments = dest.comments.filter(c => c.id !== commentId);
+            saveData();
+            renderComments(destId);
+            renderDestinations();
+        }
+
+        // Open Booking Modal
+        function openBookingModal(destId) {
+            currentDestinationId = destId;
+            const dest = destinations.find(d => d.id === destId);
+            
+            document.getElementById('bookingDestination').value = dest.name;
+            document.getElementById('bookingTickets').value = 1;
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = today;
+            
+            updateTotalPrice();
+            
+            document.getElementById('bookingFormContainer').innerHTML = `
+                <form class="booking-form" id="bookingForm" onsubmit="submitBooking(event)">
+                    <div class="form-group">
+                        <label>Destinasi</label>
+                        <input type="text" value="${dest.name}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" id="bookingName" required placeholder="Masukkan nama lengkap">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="bookingEmail" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Telepon</label>
+                        <input type="tel" id="bookingPhone" required placeholder="08xxxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Tiket</label>
+                        <input type="number" id="bookingTickets" min="1" max="10" value="1" required onchange="updateTotalPrice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Keberangkatan</label>
+                        <input type="date" id="bookingDate" min="${today}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Metode Pembayaran</label>
+                        <select id="bookingPayment" required>
+                            <option value="">Pilih metode pembayaran</option>
+                            <option value="Transfer Bank">Transfer Bank</option>
+                            <option value="E-Wallet">E-Wallet (GoPay, OVO, Dana)</option>
+                            <option value="Kartu Kredit">Kartu Kredit</option>
+                            <option value="Virtual Account">Virtual Account</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Harga</label>
+                        <input type="text" id="bookingTotal" readonly style="font-size: 1.5rem; font-weight: 700; color: var(--sunset-orange);">
+                    </div>
+                    <button type="submit" class="submit-booking-btn">Konfirmasi Pemesanan</button>
+                </form>
+            `;
+            
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        // Update Total Price
+        function updateTotalPrice() {
+            if (!currentDestinationId) return;
+            
+            const dest = destinations.find(d => d.id === currentDestinationId);
+            const tickets = parseInt(document.getElementById('bookingTickets').value) || 1;
+            const total = dest.price * tickets;
+            
+            document.getElementById('bookingTotal').value = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        // Submit Booking
+        function submitBooking(e) {
+            e.preventDefault();
+            
+            const dest = destinations.find(d => d.id === currentDestinationId);
+            const booking = {
+                id: Date.now(),
+                destination: dest.name,
+                name: document.getElementById('bookingName').value,
+                email: document.getElementById('bookingEmail').value,
+                phone: document.getElementById('bookingPhone').value,
+                tickets: parseInt(document.getElementById('bookingTickets').value),
+                date: document.getElementById('bookingDate').value,
+                payment: document.getElementById('bookingPayment').value,
+                total: dest.price * parseInt(document.getElementById('bookingTickets').value),
+                bookedBy: currentUser,
+                bookedAt: new Date().toLocaleString('id-ID')
+            };
+
+            bookings.push(booking);
+            saveData();
+            
+            showBookingConfirmation(booking);
+        }
+
+        // Show Booking Confirmation
+        function showBookingConfirmation(booking) {
+            document.getElementById('bookingFormContainer').innerHTML = `
+                <div class="confirmation-message">
+                    <div class="confirmation-icon">✅</div>
+                    <h3>Pemesanan Berhasil!</h3>
+                    <p>Terima kasih telah memesan paket wisata kami</p>
+                    <div class="confirmation-details">
+                        <p><strong>Kode Booking:</strong> #${booking.id}</p>
+                        <p><strong>Destinasi:</strong> ${booking.destination}</p>
+                        <p><strong>Nama:</strong> ${booking.name}</p>
+                        <p><strong>Jumlah Tiket:</strong> ${booking.tickets} orang</p>
+                        <p><strong>Tanggal:</strong> ${new Date(booking.date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p><strong>Total:</strong> Rp ${booking.total.toLocaleString('id-ID')}</p>
+                        <p><strong>Pembayaran:</strong> ${booking.payment}</p>
+                    </div>
+                    <p style="margin-top: 20px; color: #666;">
+                        Kami akan mengirimkan konfirmasi ke email <strong>${booking.email}</strong>
+                    </p>
+                    <button class="submit-booking-btn" onclick="closeBookingModal()" style="margin-top: 20px;">Tutup</button>
+                </div>
+            `;
+        }
+
+        // Close Booking Modal
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            currentDestinationId = null;
+        }
+
+        // Admin Tab Switch
+        function switchAdminTab(tab) {
+            const tabs = document.querySelectorAll('.admin-tab');
+            const sections = document.querySelectorAll('.admin-section');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            switch(tab) {
+                case 'destinations':
+                    document.getElementById('adminDestinations').classList.add('active');
+                    break;
+                case 'bookings':
+                    document.getElementById('adminBookings').classList.add('active');
+                    renderBookingsTable();
+                    break;
+                case 'stats':
+                    document.getElementById('adminStats').classList.add('active');
+                    renderStats();
+                    break;
+                case 'comments':
+                    document.getElementById('adminComments').classList.add('active');
+                    renderAllComments();
+                    break;
+            }
+        }
+
+        // Render Admin Destinations
+        function renderAdminDestinations() {
+            const list = document.getElementById('adminDestinationsList');
+            list.innerHTML = '';
+
+            destinations.forEach(dest => {
+                const item = document.createElement('div');
+                item.className = 'admin-destination-item';
+                item.innerHTML = `
+                    <div class="admin-destination-info">
+                        <h4>${dest.name}</h4>
+                        <p>${dest.description}</p>
+                        <p><strong>Harga:</strong> Rp ${dest.price.toLocaleString('id-ID')} | <strong>Rating:</strong> ${dest.rating} ⭐</p>
+                        <p><strong>Likes:</strong> ${dest.likes} 👍 | <strong>Dislikes:</strong> ${dest.dislikes} 👎 | <strong>Komentar:</strong> ${dest.comments.length} 💬</p>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="edit-dest-btn" onclick="editDestination(${dest.id})">Edit</button>
+                        <button class="delete-dest-btn" onclick="deleteDestination(${dest.id})">Hapus</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Show Add Destination Modal
+        function showAddDestinationModal() {
+            editingDestinationId = null;
+            document.getElementById('destinationModalTitle').textContent = 'Tambah Destinasi Baru';
+            document.getElementById('destinationForm').reset();
+            document.getElementById('destinationModal').classList.add('active');
+        }
+
+        // Edit Destination
+        function editDestination(destId) {
+            editingDestinationId = destId;
+            const dest = destinations.find(d => d.id === destId);
+            
+            document.getElementById('destinationModalTitle').textContent = 'Edit Destinasi';
+            document.getElementById('destName').value = dest.name;
+            document.getElementById('destDescription').value = dest.description;
+            document.getElementById('destPrice').value = dest.price;
+            document.getElementById('destRating').value = dest.rating;
+            document.getElementById('destImage').value = dest.image;
+            
+            document.getElementById('destinationModal').classList.add('active');
+        }
+
+        // Submit Destination
+        function submitDestination(e) {
+            e.preventDefault();
+
+            const destData = {
+                name: document.getElementById('destName').value,
+                description: document.getElementById('destDescription').value,
+                price: parseInt(document.getElementById('destPrice').value),
+                rating: parseFloat(document.getElementById('destRating').value),
+                image: document.getElementById('destImage').value
+            };
+
+            if (editingDestinationId) {
+                // Update existing
+                const dest = destinations.find(d => d.id === editingDestinationId);
+                Object.assign(dest, destData);
+            } else {
+                // Add new
+                const newDest = {
+                    id: Date.now(),
+                    ...destData,
+                    likes: 0,
+                    dislikes: 0,
+                    comments: []
+                };
+                destinations.push(newDest);
+            }
+
+            saveData();
+            closeDestinationModal();
+            renderAdminDestinations();
+            alert('Destinasi berhasil disimpan!');
+        }
+
+        // Close Destination Modal
+        function closeDestinationModal() {
+            document.getElementById('destinationModal').classList.remove('active');
+            editingDestinationId = null;
+        }
+
+        // Delete Destination
+        function deleteDestination(destId) {
+            if (!confirm('Yakin ingin menghapus destinasi ini?')) return;
+            
+            destinations = destinations.filter(d => d.id !== destId);
+            saveData();
+            renderAdminDestinations();
+        }
+
+        // Render Bookings Table
+        function renderBookingsTable() {
+            const tbody = document.getElementById('bookingsTableBody');
+            tbody.innerHTML = '';
+
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">Belum ada pemesanan</td></tr>';
+                return;
+            }
+
+            bookings.forEach((booking, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${booking.name}</td>
+                    <td>${booking.destination}</td>
+                    <td>${booking.tickets}</td>
+                    <td>${new Date(booking.date).toLocaleDateString('id-ID')}</td>
+                    <td>Rp ${booking.total.toLocaleString('id-ID')}</td>
+                    <td>${booking.payment}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Render Stats
+        function renderStats() {
+            const grid = document.getElementById('statsGrid');
+            
+            const totalDestinations = destinations.length;
+            const totalBookings = bookings.length;
+            const totalRevenue = bookings.reduce((sum, b) => sum + b.total, 0);
+            const totalLikes = destinations.reduce((sum, d) => sum + d.likes, 0);
+            const totalComments = destinations.reduce((sum, d) => sum + d.comments.length, 0);
+
+            grid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalDestinations}</div>
+                    <div class="stat-label">Total Destinasi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalBookings}</div>
+                    <div class="stat-label">Total Pemesanan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Rp ${(totalRevenue / 1000000).toFixed(1)}M</div>
+                    <div class="stat-label">Total Pendapatan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalLikes}</div>
+                    <div class="stat-label">Total Likes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalComments}</div>
+                    <div class="stat-label">Total Komentar</div>
+                </div>
+            `;
+        }
+
+        // Render All Comments
+        function renderAllComments() {
+            const container = document.getElementById('allCommentsList');
+            container.innerHTML = '';
+
+            destinations.forEach(dest => {
+                if (dest.comments.length > 0) {
+                    const section = document.createElement('div');
+                    section.style.marginBottom = '30px';
+                    section.innerHTML = `
+                        <h4 style="font-family: 'Playfair Display', serif; color: var(--tropical-green); margin-bottom: 15px;">
+                            ${dest.name} (${dest.comments.length} komentar)
+                        </h4>
+                    `;
+
+                    dest.comments.forEach(comment => {
+                        const item = document.createElement('div');
+                        item.className = 'comment-item';
+                        item.innerHTML = `
+                            <div class="comment-header">
+                                <span class="comment-author">${comment.author}</span>
+                                <div class="comment-actions">
+                                    <button class="delete-comment-btn" onclick="deleteComment(${dest.id}, ${comment.id}); renderAllComments();">Hapus</button>
+                                </div>
+                            </div>
+                            <p class="comment-text">${comment.text}</p>
+                            <small style="color: #999;">${comment.date}</small>
+                        `;
+                        section.appendChild(item);
+                    });
+
+                    container.appendChild(section);
+                }
+            });
+
+            if (container.innerHTML === '') {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">Belum ada komentar</p>';
+            }
+        }
+
+        // Initialize app on load
+        window.addEventListener('load', () => {
+            // Set initial state
+            document.getElementById('loginPage').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
